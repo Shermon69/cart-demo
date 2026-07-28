@@ -29,3 +29,16 @@ def calculate_total(cart):
     for item in cart:
         total += item["price"] * item["quantity"]
     return total
+
+
+def apply_discount(total, percent):
+    """Take a percentage off a total.
+
+    Args:
+        total: The amount before discount.
+        percent: Discount percentage, 0 to 100.
+
+    Returns:
+        The discounted amount.
+    """
+    return total - (total * percent)
