@@ -35,10 +35,15 @@ def apply_discount(total, percent):
     """Take a percentage off a total.
 
     Args:
-        total: The amount before discount.
+        total: The amount before discount. Must be greater than 0.
         percent: Discount percentage, 0 to 100.
 
     Returns:
         The discounted amount.
+
+    Raises:
+        ValueError: If percent is outside 0 to 100.
     """
+    if percent < 0 or percent > 100:
+        raise ValueError("percent must be between 0 and 100")
     return total - (total * percent)
