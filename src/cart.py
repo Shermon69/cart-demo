@@ -47,3 +47,19 @@ def apply_discount(total, percent):
     if percent < 0 or percent > 100:
         raise ValueError("percent must be between 0 and 100")
     return total - (total * percent)
+
+
+def refund(amount, paid):
+    """Refund part of a payment.
+
+    Args:
+        amount: How much to refund. Must not exceed what was paid.
+        paid: The original payment.
+
+    Returns:
+        The amount still held after the refund.
+
+    Raises:
+        ValueError: If amount is greater than paid.
+    """
+    return paid - amount
