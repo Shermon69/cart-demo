@@ -46,6 +46,8 @@ def apply_discount(total, percent):
     """
     if percent < 0 or percent > 100:
         raise ValueError("percent must be between 0 and 100")
+    if total <= 0:
+        raise ValueError("total must be positive")
     return total - (total * percent)
 
 
