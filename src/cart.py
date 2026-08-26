@@ -25,7 +25,7 @@ def calculate_total(cart):
     Returns:
         The total price as a float.
     """
-    total = 0
+    total = 0.0
     for item in cart:
         total += item["price"] * item["quantity"]
     return total
