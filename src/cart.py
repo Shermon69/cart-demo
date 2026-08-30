@@ -35,7 +35,7 @@ def apply_discount(total, percent):
     """Take a percentage off a total.
 
     Args:
-        total: The amount before discount. Must be >= 0.
+        total: The amount before discount. Must be positive.
         percent: Discount percentage, 0 to 100.
 
     Returns:
@@ -49,7 +49,6 @@ def apply_discount(total, percent):
     if total <= 0:
         raise ValueError("total must be positive")
     return total - (total * percent)
-
 
 def refund(amount, paid):
     """Refund part of a payment.
