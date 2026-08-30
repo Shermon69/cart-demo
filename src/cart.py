@@ -35,7 +35,7 @@ def apply_discount(total, percent):
     """Take a percentage off a total.
 
     Args:
-        total: The amount before discount. Must be greater than 0.
+        total: The amount before discount. Must be >= 0.
         percent: Discount percentage, 0 to 100.
 
     Returns:
