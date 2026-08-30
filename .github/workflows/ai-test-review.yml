@@ -1,13 +1,16 @@
 name: AI Test Review
 
 on:
+  # Every pull request: analyses only the functions that changed.
   pull_request:
+  # Run manually for a baseline: ranks the whole repository and generates
+  # tests for the riskiest few. Do this once when the action is first added.
   workflow_dispatch:
 
 jobs:
   review:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
 
     permissions:
       contents: write          # lets the action commit the generated tests back
@@ -25,19 +28,18 @@ jobs:
           # the generated tests can be pushed back to it.
           ref: ${{ github.head_ref }}
 
-      - name: Analyse changed functions
+      - name: Analyse and generate tests
         uses: SenuriDis/R26-SE-038@integration/pipeline
         with:
           groq-api-key: ${{ secrets.GROQ_API_KEY }}
           path: src
-          changed-only: "true"
+          # changed-only defaults to "auto": scoped to the diff on a pull
+          # request, whole repository on a manual run. Nothing to switch.
+          #
           # LOW because this is a small repository. Only 1 function in 266
-          # reached MEDIUM on a mature library, so the default would select
-          # nothing here and the run would succeed having done no work.
+          # reached MEDIUM on a mature library, so the default of MEDIUM would
+          # select nothing here and the run would do no work.
           min-risk-level: "LOW"
           max-functions: "3"
-          # Write the generated tests back into the branch, and attach them
-          # to the run so they can be downloaded either way.
           commit-tests: "true"
           tests-dir: "tests/ai_generated"
-          upload-artifact: "true"
