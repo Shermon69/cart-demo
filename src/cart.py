@@ -64,3 +64,23 @@ def refund(amount, paid):
         ValueError: If amount is greater than paid.
     """
     return paid - amount
+
+
+def calculate_tip(bill, tip_percent):
+    """Calculate the tip amount for a bill.
+
+    Args:
+        bill: The total bill amount. Must be greater than 0.
+        tip_percent: Tip percentage, 0 to 100.
+
+    Returns:
+        The tip amount.
+
+    Raises:
+        ValueError: If tip_percent is outside 0 to 100.
+    """
+    if tip_percent < 0 or tip_percent > 100:
+        raise ValueError("tip_percent must be between 0 and 100")
+    if bill <= 0:
+        raise ValueError("bill must be positive")
+    return bill * (tip_percent / 100)
