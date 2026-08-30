@@ -1,0 +1,35 @@
+name: AI Test Review
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    permissions:
+      contents: read
+      pull-requests: write     # lets the action post its report as a comment
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # Not optional. The risk model leans on bug_history and
+          # commit_frequency, both read from git. With the default shallow
+          # clone there is no history, every function looks brand new, and
+          # everything scores LOW.
+          fetch-depth: 0
+
+      - name: Analyse changed functions
+        uses: SenuriDis/R26-SE-038@integration/pipeline
+        with:
+          groq-api-key: ${{ secrets.GROQ_API_KEY }}
+          path: src
+          changed-only: "true"
+          # LOW because this is a small repository. Only 1 function in 266
+          # reached MEDIUM on a mature library, so the default would select
+          # nothing here and the run would succeed having done no work.
+          min-risk-level: "LOW"
+          max-functions: "3"
